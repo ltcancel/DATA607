@@ -29,8 +29,35 @@ plot(pressure)
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
-Link to dataset https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data
+install dplyr to create subsets
+```{r}
+install.packages("dplyr")
+library(dplyr)
+```
 
+Link to dataset https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data
+```{r}
+mushroom_data <- data.frame(read.csv(url("https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data"),header=F))
+```
+
+rename column names
+```{r}
+names(mushroom_data) <- c("class","cap-shape","cap-surface","cap-color","bruises","odor","gill-attachment","gil-spacing","gill-size","gill-color","stalk-shape","stalk-root","stalk-surface-above-ring","stalk-surface-below-ring","stalk-color-above-ring","stalk-color-below-ring","veil-type","veil-color","ring-number","ring-type","spore-print-color","population","habitat")
+```
+subset of mushroom data
+```{r}
+mushroom_subset <- select(mushroom_data, "class", "cap-shape", "cap-surface", "cap-color", "bruises", "odor")
+```
+
+read mushroom subset
+```{r}
+mushroom_subset
+```
+
+Read mushroom data
+```{r}
+mushroom_data
+```
 
 Data dictionary https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.names
 
