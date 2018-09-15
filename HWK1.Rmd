@@ -15,41 +15,29 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
-install dplyr to create subsets
+call dplyr to create subsets
 ```{r}
-install.packages("dplyr")
 library(dplyr)
 ```
 
-Link to dataset https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data
+Data dictionary to reference for column names and values https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.names
+
+Import mushroom dataset https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data
 ```{r}
 mushroom_data <- data.frame(read.csv(url("https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.data"),header=F, stringsAsFactors = FALSE))
 ```
 
-rename column names
+Add column names to imported data
 ```{r}
 names(mushroom_data) <- c("class","cap-shape","cap-surface","cap-color","bruises","odor","gill-attachment","gil-spacing","gill-size","gill-color","stalk-shape","stalk-root","stalk-surface-above-ring","stalk-surface-below-ring","stalk-color-above-ring","stalk-color-below-ring","veil-type","veil-color","ring-number","ring-type","spore-print-color","population","habitat")
 ```
-subset of mushroom data
+
+Create subset of mushroom data using the class (poisonous or edible) and a few other columns
 ```{r}
 mushroom_subset <- select(mushroom_data, "class", "cap-shape", "cap-surface", "cap-color", "bruises", "odor")
 ```
 
-replacing field values
+Replacing field values for all columns in new subset
 ```{r}
 mushroom_subset$class[mushroom_subset$class == "p"] <- "poisonous"
 mushroom_subset$class[mushroom_subset$class == "e"] <- "edible"
@@ -80,17 +68,14 @@ mushroom_subset$odor[mushroom_subset$odor == "l"] <- "anise"
 mushroom_subset$odor[mushroom_subset$odor == "c"] <- "creosote"
 mushroom_subset$odor[mushroom_subset$odor == "y"] <- "fishy"
 mushroom_subset$odor[mushroom_subset$odor == "f"] <- "foul"
+mushroom_subset$odor[mushroom_subset$odor == "m"] <- "musty"
+mushroom_subset$odor[mushroom_subset$odor == "n"] <- "none"
+mushroom_subset$odor[mushroom_subset$odor == "p"] <- "pugnent"
+mushroom_subset$odor[mushroom_subset$odor == "s"] <- "spicy"
 ```
 
-read mushroom subset
+Check mushroom subset to make sure all column names and values are correct
 ```{r}
 mushroom_subset
 ```
-
-Read mushroom data
-```{r}
-mushroom_data
-```
-
-Data dictionary https://archive.ics.uci.edu/ml/machine-learning-databases/mushroom/agaricus-lepiota.names
 
